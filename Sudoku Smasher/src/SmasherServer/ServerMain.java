@@ -7,7 +7,7 @@ package SmasherServer;
 
 public class ServerMain
 {
-
+    Server server = new Server(3000);
     public static void main(String[] args)
     {
         int[][] testBoard = new int[][] {
