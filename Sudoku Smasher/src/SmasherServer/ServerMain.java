@@ -2,7 +2,7 @@ package SmasherServer;
 //Contributors:
 //Ben Smolin
 //Dat Nguyen.
-//
+//Mary Kate Durnan
 //
 
 public class ServerMain
