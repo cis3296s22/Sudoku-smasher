@@ -24,7 +24,9 @@ public class Solver implements Runnable{
             this.socket = socket;
             this.input_stream = new ObjectInputStream(socket.getInputStream());
             this.output_stream = new ObjectOutputStream(socket.getOutputStream());
-            output_stream.writeObject(board);
+            Object ob = board;
+            ob = input_stream.read();
+            this.board = (int[][])ob;
         }
         catch (IOException i) { System.out.println(i); }
 

@@ -36,6 +36,12 @@ public class ServerMain
         };
         Debugger.showMatrix(testBoard);
         Debugger.showMatrix(badTestBoard);
+        //server accept loop
+        while(true)
+        {
+            System.out.println("placeholder...");
+            break;
+        }
 //        Runnable a = new Solver(testBoard);
 //        Runnable b = new Solver(badTestBoard);
 //        a.run();
