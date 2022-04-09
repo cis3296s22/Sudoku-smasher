@@ -34,10 +34,14 @@ public class ServerMain
                 { 0, 0, 0, 0, 0, 0, 0, 7, 4 },
                 { 0, 0, 5, 2, 0, 6, 3, 0, 2 }
         };
+        Debugger.showMatrix(testBoard);
+        Debugger.showMatrix(badTestBoard);
         Runnable a = new Solver(testBoard);
         Runnable b = new Solver(badTestBoard);
         a.run();
         b.run();
+        Debugger.showMatrix(testBoard);
+
     }
 
 }
