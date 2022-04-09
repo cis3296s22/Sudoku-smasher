@@ -1,18 +1,33 @@
 package SmasherServer;
 
+import  java.net.*;
+import  java.io.*;
+
 public class Solver implements Runnable{
-    private int[][] board = new int[board_size][board_size];
+    private int[][] board;
+    private Socket  socket;
+    private ObjectInputStream input_stream;
+    private ObjectOutputStream output_stream;
+
     public static final int board_size = 9;
 
     //in the final version this should probably accept a socket connection rather than a board
 
     /**
      * constructor giving access to the board since run() has no arguments
-     * @param board 2d array of ints representing sudoku board
+     * @param socket Socket connection taken from connection distributor queue
      */
-    public Solver(int[][] board)
+    public Solver(Socket socket)
     {
-        this.board = board;
+        try
+        {
+            this.socket = socket;
+            this.input_stream = new ObjectInputStream(socket.getInputStream());
+            this.output_stream = new ObjectOutputStream(socket.getOutputStream());
+            output_stream.writeObject(board);
+        }
+        catch (IOException i) { System.out.println(i); }
+
     }
 
     @Override

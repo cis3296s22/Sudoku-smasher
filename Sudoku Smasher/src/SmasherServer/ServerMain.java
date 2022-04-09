@@ -36,11 +36,11 @@ public class ServerMain
         };
         Debugger.showMatrix(testBoard);
         Debugger.showMatrix(badTestBoard);
-        Runnable a = new Solver(testBoard);
-        Runnable b = new Solver(badTestBoard);
-        a.run();
-        b.run();
-        Debugger.showMatrix(testBoard);
+//        Runnable a = new Solver(testBoard);
+//        Runnable b = new Solver(badTestBoard);
+//        a.run();
+//        b.run();
+//        Debugger.showMatrix(testBoard);
 
     }
 
