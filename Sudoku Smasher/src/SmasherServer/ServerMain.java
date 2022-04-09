@@ -3,13 +3,15 @@ package SmasherServer;
 //Ben Smolin
 //Dat Nguyen.
 //Mary Kate Durnan
-//
+//Robert Stachurski
 
 public class ServerMain
 {
     Server server = new Server(3000);
     public static void main(String[] args)
     {
+        Frame.createAndShowGUI();
+
         int[][] testBoard = new int[][] {
                 { 3, 0, 6, 5, 0, 8, 4, 0, 0 },
                 { 5, 2, 0, 0, 0, 0, 0, 0, 0 },
