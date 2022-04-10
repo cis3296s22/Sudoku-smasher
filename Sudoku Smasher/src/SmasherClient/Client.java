@@ -48,5 +48,6 @@ public class Client {
             System.out.println("Client can not receive message!");
             System.exit(0);
         }
+        return line;
     }
 }

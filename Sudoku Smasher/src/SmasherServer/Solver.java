@@ -20,18 +20,10 @@ public class Solver implements Runnable{
      */
     public Solver(SafeQueue connection_queue)
     {
-        try
-        {
             this.socket = null;
             this.connection_queue = connection_queue;
-            this.input_stream = new ObjectInputStream(socket.getInputStream());
-            this.output_stream = new ObjectOutputStream(socket.getOutputStream());
-            Object ob;
-            ob = input_stream.read();
-            this.board = (int[][])ob;
-        }
-        catch (IOException i) { System.out.println(i); }
-
+            this.input_stream = null;
+            this.output_stream = null;
     }
 
     @Override
@@ -43,6 +35,14 @@ public class Solver implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            try{
+                input_stream = new ObjectInputStream(socket.getInputStream());
+                output_stream = new ObjectOutputStream(socket.getOutputStream());
+                board = (int[][]) input_stream.readObject();
+            }
+            catch (IOException e){System.out.println(e);}
+            catch (ClassNotFoundException e) {e.printStackTrace();}
+
 
             if(solveSudoku(board))
             {
