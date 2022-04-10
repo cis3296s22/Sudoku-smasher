@@ -20,11 +20,13 @@ public class Client {
 
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
+            return true;
 
         }catch(IOException e)
         {
             System.out.println("Connection Error!");
         }
+        return false;
 
     }
 
@@ -42,7 +44,7 @@ public class Client {
         String line = "";
         try{
             line = new String(in.readUTF());
-        }catch(IOEception e){
+        }catch(IOException e){
             System.out.println("Client can not receive message!");
             System.exit(0);
         }
