@@ -1,28 +1,60 @@
 package SmasherServer;
 
+import  java.net.*;
+import  java.io.*;
+
 public class Solver implements Runnable{
-    private int[][] board = new int[board_size][board_size];
+    private int[][] board;
+    private Socket  socket;
+    private ObjectInputStream input_stream;
+    private ObjectOutputStream output_stream;
+    private SafeQueue connection_queue;
+
     public static final int board_size = 9;
 
     //in the final version this should probably accept a socket connection rather than a board
 
     /**
      * constructor giving access to the board since run() has no arguments
-     * @param board 2d array of ints representing sudoku board
+     * @param connection_queue thread-safe queue of sockets
      */
-    public Solver(int[][] board)
+    public Solver(SafeQueue connection_queue)
     {
-        this.board = board;
+            this.socket = null;
+            this.connection_queue = connection_queue;
+            this.input_stream = null;
+            this.output_stream = null;
     }
 
     @Override
-    public void run()
-    {
-        if(solveSudoku(board)){
-            System.out.println("we did it!");
-        }else{
-            System.out.println("uh oh...");
+    public void run() {
+        while(true)
+        {
+            try {
+                socket = connection_queue.take();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try{
+                input_stream = new ObjectInputStream(socket.getInputStream());
+                output_stream = new ObjectOutputStream(socket.getOutputStream());
+                board = (int[][]) input_stream.readObject();
+            }
+            catch (IOException e){System.out.println(e);}
+            catch (ClassNotFoundException e) {e.printStackTrace();}
+
+
+            if(solveSudoku(board))
+            {
+                System.out.println("we did it!");
+                try {output_stream.writeObject(board);}
+                catch (IOException e) {e.printStackTrace();}
+            }
+            else
+                System.out.println("uh oh...");
+
         }
+
     }
 
     /**

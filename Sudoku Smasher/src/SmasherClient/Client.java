@@ -1,4 +1,4 @@
-package SmasherServer;
+package SmasherClient;
 
 import java.io.*;
 import java.net.*;
@@ -14,17 +14,19 @@ public class Client {
 
     public boolean Client(int port){
         try{
-            socket = New Socket("Host", port);
+            socket = new Socket("Host", port);
             System.out.println("Client start!");
             System.out.println("Sever-Client are connected!");
 
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
+            return true;
 
         }catch(IOException e)
         {
             System.out.println("Connection Error!");
         }
+        return false;
 
     }
 
@@ -42,9 +44,10 @@ public class Client {
         String line = "";
         try{
             line = new String(in.readUTF());
-        }catch(IOEception e){
+        }catch(IOException e){
             System.out.println("Client can not receive message!");
             System.exit(0);
         }
+        return line;
     }
 }

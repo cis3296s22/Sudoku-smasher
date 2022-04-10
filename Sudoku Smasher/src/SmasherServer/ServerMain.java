@@ -5,12 +5,23 @@ package SmasherServer;
 //Mary Kate Durnan
 //Robert Stachurski
 
+import SmasherClient.Frame;
+
 public class ServerMain
 {
+
     Server server = new Server(3000);
     public static void main(String[] args)
     {
+        final int MAXTHREADS = 6;
+        Solver solvers[] = new Solver[MAXTHREADS];
         Frame.createAndShowGUI();
+        SafeQueue connections = new SafeQueue(MAXTHREADS);
+        for(int i = 0 ; i < MAXTHREADS ; i++) {
+            solvers[i] = new Solver(connections);
+            solvers[i].run();
+        }
+
 
         int[][] testBoard = new int[][] {
                 { 3, 0, 6, 5, 0, 8, 4, 0, 0 },
@@ -34,10 +45,20 @@ public class ServerMain
                 { 0, 0, 0, 0, 0, 0, 0, 7, 4 },
                 { 0, 0, 5, 2, 0, 6, 3, 0, 2 }
         };
-        Runnable a = new Solver(testBoard);
-        Runnable b = new Solver(badTestBoard);
-        a.run();
-        b.run();
+        Debugger.showMatrix(testBoard);
+        Debugger.showMatrix(badTestBoard);
+        //server accept loop
+        while(true)
+        {
+            System.out.println("placeholder...");
+            break;
+        }
+//        Runnable a = new Solver(testBoard);
+//        Runnable b = new Solver(badTestBoard);
+//        a.run();
+//        b.run();
+//        Debugger.showMatrix(testBoard);
+
     }
 
 }
