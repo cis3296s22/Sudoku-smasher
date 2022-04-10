@@ -7,10 +7,19 @@ package SmasherServer;
 
 public class ServerMain
 {
+
     Server server = new Server(3000);
     public static void main(String[] args)
     {
+        final int MAXTHREADS = 6;
+        Solver solvers[] = new Solver[MAXTHREADS];
         Frame.createAndShowGUI();
+        SafeQueue connections = new SafeQueue(MAXTHREADS);
+        for(int i = 0 ; i < MAXTHREADS ; i++) {
+            solvers[i] = new Solver(connections);
+            solvers[i].run();
+        }
+
 
         int[][] testBoard = new int[][] {
                 { 3, 0, 6, 5, 0, 8, 4, 0, 0 },

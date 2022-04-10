@@ -8,6 +8,7 @@ public class Solver implements Runnable{
     private Socket  socket;
     private ObjectInputStream input_stream;
     private ObjectOutputStream output_stream;
+    private SafeQueue connection_queue;
 
     public static final int board_size = 9;
 
@@ -15,16 +16,17 @@ public class Solver implements Runnable{
 
     /**
      * constructor giving access to the board since run() has no arguments
-     * @param socket Socket connection taken from connection distributor queue
+     * @param connection_queue thread-safe queue of sockets
      */
-    public Solver(Socket socket)
+    public Solver(SafeQueue connection_queue)
     {
         try
         {
-            this.socket = socket;
+            this.socket = null;
+            this.connection_queue = connection_queue;
             this.input_stream = new ObjectInputStream(socket.getInputStream());
             this.output_stream = new ObjectOutputStream(socket.getOutputStream());
-            Object ob = board;
+            Object ob;
             ob = input_stream.read();
             this.board = (int[][])ob;
         }
@@ -33,13 +35,26 @@ public class Solver implements Runnable{
     }
 
     @Override
-    public void run()
-    {
-        if(solveSudoku(board)){
-            System.out.println("we did it!");
-        }else{
-            System.out.println("uh oh...");
+    public void run() {
+        while(true)
+        {
+            try {
+                socket = connection_queue.take();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            if(solveSudoku(board))
+            {
+                System.out.println("we did it!");
+                try {output_stream.writeObject(board);}
+                catch (IOException e) {e.printStackTrace();}
+            }
+            else
+                System.out.println("uh oh...");
+
         }
+
     }
 
     /**
