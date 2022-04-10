@@ -1,4 +1,4 @@
-package SmasherServer;
+package SmasherClient;
 
 import java.io.*;
 import java.net.*;
@@ -14,7 +14,7 @@ public class Client {
 
     public boolean Client(int port){
         try{
-            socket = New Socket("Host", port);
+            socket = new Socket("Host", port);
             System.out.println("Client start!");
             System.out.println("Sever-Client are connected!");
 

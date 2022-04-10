@@ -5,6 +5,8 @@ package SmasherServer;
 //Mary Kate Durnan
 //Robert Stachurski
 
+import SmasherClient.Frame;
+
 public class ServerMain
 {
 
