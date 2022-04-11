@@ -1,6 +1,8 @@
 package SmasherClient;
 
 import SmasherClient.Frame;
+import SmasherServer.Debugger;
+
 public class ClientMain {
     public static void main(String[] args)
     {
@@ -20,5 +22,6 @@ public class ClientMain {
         int port = 3000;
         Client client = new Client(port);
         client.sendPuzzle(testBoard);
+        Debugger.showMatrix(client.getPuzzle());
     }
 }

@@ -8,6 +8,7 @@ public class Server {
     private Socket socket = null;
     private ServerSocket server = null;
     private ObjectInputStream in = null;
+    private ObjectOutputStream out = null;
     private int listeningPort = 0;
 
     public void handleConnection(Socket socket) {
@@ -34,19 +35,29 @@ public class Server {
  
             // takes input from the client socket
             in = new ObjectInputStream(socket.getInputStream());
+            out = new ObjectOutputStream(socket.getOutputStream());
 
             System.out.println(in);
 
-            String line = "";
+//            System.out.println("before thread");
+//            Runnable test = new Solver(socket);
+//            test.run();
+//            System.out.println("after thread");
+
+         //   String line = "";
  
             // reads message from client until "Over" is sent
-            while (!line.equals("Over"))
-            {
+           // while (!line.equals("Over"))
+           // {
                 try
                 {
                     int[][] board;
                     board= (int[][]) in.readObject();
                     Debugger.showMatrix(board);
+                    Runnable solve = new Solver(board);
+                    solve.run();
+                    Debugger.showMatrix(board);
+                    out.writeObject(board);
  
                 }
                 catch(IOException i)
@@ -54,7 +65,7 @@ public class Server {
                     System.out.println(i);
                 }
                 catch (ClassNotFoundException i){ System.out.println(i);}
-            }
+         //   }
             System.out.println("Closing connection");
  
             // close connection

@@ -16,12 +16,14 @@ public class ServerMain
         final int MAXTHREADS = 6;
         Solver solvers[] = new Solver[MAXTHREADS];
 //        Frame.createAndShowGUI();
-        SafeQueue connections = new SafeQueue(MAXTHREADS);
-        for(int i = 0 ; i < MAXTHREADS ; i++) {
-            solvers[i] = new Solver(connections);
-            System.out.println("Hello");
-           // solvers[i].run();
-        }
+//        SafeQueue connections = new SafeQueue(MAXTHREADS);
+
+
+//        for(int i = 0 ; i < MAXTHREADS ; i++) {
+//            solvers[i] = new Solver(connections);
+//            System.out.println("Hello");
+//           // solvers[i].run();
+//        }
 
 
 //        int[][] testBoard = new int[][] {

@@ -1,5 +1,6 @@
 package SmasherClient;
 
+import javax.management.ObjectInstance;
 import java.io.*;
 import java.net.*;
 import java.io.DataInputStream;
@@ -49,7 +50,18 @@ public class Client {
 
     }
 
+    public int[][] getPuzzle()
+    {
+        int[][] board = new int[9][9];
+        try {
+            ObjectInputStream obj_in = new ObjectInputStream(socket.getInputStream());
 
+            board = (int[][]) obj_in.readObject();
+
+        }catch (IOException e){System.out.println(e);}
+        catch (ClassNotFoundException e) {e.printStackTrace();}
+        return board;
+    }
 
     public String receiveSolver(){
         String line = "";
