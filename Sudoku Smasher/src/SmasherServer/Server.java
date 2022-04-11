@@ -1,15 +1,13 @@
 package SmasherServer;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
     private Socket socket = null;
     private ServerSocket server = null;
-    private DataInputStream in = null;
+    private ObjectInputStream in = null;
     private int listeningPort = 0;
 
     public void handleConnection(Socket socket) {
@@ -35,8 +33,7 @@ public class Server {
             System.out.println("Client accepted");
  
             // takes input from the client socket
-            in = new DataInputStream(
-                new BufferedInputStream(socket.getInputStream()));
+            in = new ObjectInputStream(socket.getInputStream());
 
             System.out.println(in);
 
@@ -47,14 +44,16 @@ public class Server {
             {
                 try
                 {
-                    line = in.readUTF();
-                    System.out.println(line);
+                    int[][] board;
+                    board= (int[][]) in.readObject();
+                    Debugger.showMatrix(board);
  
                 }
                 catch(IOException i)
                 {
                     System.out.println(i);
                 }
+                catch (ClassNotFoundException i){ System.out.println(i);}
             }
             System.out.println("Closing connection");
  

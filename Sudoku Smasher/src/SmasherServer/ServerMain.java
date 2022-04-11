@@ -20,7 +20,7 @@ public class ServerMain
         for(int i = 0 ; i < MAXTHREADS ; i++) {
             solvers[i] = new Solver(connections);
             System.out.println("Hello");
-            solvers[i].run();
+           // solvers[i].run();
         }
 
 

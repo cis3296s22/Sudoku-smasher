@@ -6,6 +6,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.security.PublicKey;
 
 public class Client {
     private Socket socket = null;
@@ -31,6 +32,13 @@ public class Client {
 
     }
 
+    public void sendPuzzle(int[][] board){
+        try {
+            ObjectOutputStream obj_out= new ObjectOutputStream(socket.getOutputStream());
+            obj_out.writeObject(board);
+        }catch (IOException e)  {System.out.println(e);}
+    }
+
     public void sendInput(String lines){
         // send input to server
         try {
@@ -40,6 +48,8 @@ public class Client {
         }
 
     }
+
+
 
     public String receiveSolver(){
         String line = "";
