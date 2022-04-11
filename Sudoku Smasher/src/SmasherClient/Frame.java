@@ -9,9 +9,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Frame {
+    private final int[][] sudokuMatrix = new int[9][9];
+    private final Client client;
+    public Frame(Client client){
+        this.client = client;
+    }
+    public void createAndShowGUI() {
 
-    public static void createAndShowGUI() {
-        int[][] sudokuMatrix = new int[9][9];
         ArrayList<JTextField> boxes = new ArrayList<JTextField>();
         final Border fieldBorder = BorderFactory.createLineBorder(Color.BLACK);
 
@@ -63,13 +67,8 @@ public class Frame {
                     }
                     sudokuMatrix[row + rowOffset][(i % 3) + colOffset] = num;
                 }
-                int size = sudokuMatrix.length;
-                for(int r = 0 ; r < size ; r++) {
-                    for (int c = 0; c < size; c++) {
-                        System.out.print(sudokuMatrix[r][c] + " ");
-                    }
-                    System.out.println();
-                }
+                client.sendPuzzle(sudokuMatrix);
+                Debugger.showMatrix(sudokuMatrix);
             }
         });
 
@@ -79,5 +78,9 @@ public class Frame {
         frame.pack();
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
+    }
+
+    public int[][] getSudokuMatrix() {
+        return sudokuMatrix;
     }
 }

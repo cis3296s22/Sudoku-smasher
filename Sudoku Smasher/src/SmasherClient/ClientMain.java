@@ -6,6 +6,7 @@ import SmasherServer.Debugger;
 public class ClientMain {
     public static void main(String[] args)
     {
+
         int[][] testBoard = new int[][] {
                 { 3, 0, 6, 5, 0, 8, 4, 0, 0 },
                 { 5, 2, 0, 0, 0, 0, 0, 0, 0 },
@@ -18,10 +19,11 @@ public class ClientMain {
                 { 0, 0, 5, 2, 0, 6, 3, 0, 0 }
         };
 
-        Frame.createAndShowGUI();
         int port = 3000;
         Client client = new Client(port);
-        client.sendPuzzle(testBoard);
+        Frame frame = new Frame(client);
+        frame.createAndShowGUI();
+//        client.sendPuzzle(testBoard);
         Debugger.showMatrix(client.getPuzzle());
     }
 }
