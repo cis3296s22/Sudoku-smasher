@@ -22,6 +22,7 @@ Please send a message to one of us if you would like to contribute
 - Use this github repository: ... 
 - The most recent, stable release will be on the main branch. Other branches will be implementing features in progress.
 - The most recent version of Intellij is recommended although the project should work on any Java IDE.
+- For the client, make sure the MANIFEST.MF file says Main-Class:SmasherClient.ClientMain. For the server it should read Main-Class:SmasherServer.ServerMain
 - In Intellij, navigate to File > Project Structure > Artifacts
 - Click the plus button to add a new artifact, select 'from modules with dependencies'
 - Select the main function in the package you are trying to build and hit 'ok'.
