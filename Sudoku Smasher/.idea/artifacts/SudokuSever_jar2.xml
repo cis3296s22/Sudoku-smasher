@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SudokuSever:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/SudokuSever_jar2</output-path>
+    <root id="archive" name="Sudoku Smasher.jar">
+      <element id="module-output" name="Sudoku Smasher" />
+    </root>
+  </artifact>
+</component>
