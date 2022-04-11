@@ -5,6 +5,7 @@ public class ClientMain {
     public static void main(String[] args)
     {
         Frame.createAndShowGUI();
-        Client client = new Client();
+        int port = 3000;
+        Client client = new Client(port);
     }
 }

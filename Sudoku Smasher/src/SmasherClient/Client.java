@@ -11,26 +11,27 @@ public class Client {
     private Socket socket = null;
     private DataInputStream in = null;
     private DataOutputStream out = null;
+    private String serverHost = "localhost";
+    private int serverPort = 3000;
 
-    public boolean Client(int port){
+
+    public Client(int port){
         try{
-            socket = new Socket("Host", port);
+            socket = new Socket("localhost", port);
             System.out.println("Client start!");
             System.out.println("Sever-Client are connected!");
 
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
-            return true;
 
         }catch(IOException e)
         {
             System.out.println("Connection Error!");
         }
-        return false;
 
     }
 
-    public void sentInput(String lines){
+    public void sendInput(String lines){
         // send input to server
         try {
             out.writeUTF(lines);
