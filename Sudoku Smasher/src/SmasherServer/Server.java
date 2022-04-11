@@ -1,15 +1,14 @@
 package SmasherServer;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
     private Socket socket = null;
     private ServerSocket server = null;
-    private DataInputStream in = null;
+    private ObjectInputStream in = null;
+    private ObjectOutputStream out = null;
     private int listeningPort = 0;
 
     public void handleConnection(Socket socket) {
@@ -35,27 +34,38 @@ public class Server {
             System.out.println("Client accepted");
  
             // takes input from the client socket
-            in = new DataInputStream(
-                new BufferedInputStream(socket.getInputStream()));
+            in = new ObjectInputStream(socket.getInputStream());
+            out = new ObjectOutputStream(socket.getOutputStream());
 
             System.out.println(in);
 
-            String line = "";
+//            System.out.println("before thread");
+//            Runnable test = new Solver(socket);
+//            test.run();
+//            System.out.println("after thread");
+
+         //   String line = "";
  
             // reads message from client until "Over" is sent
-            while (!line.equals("Over"))
-            {
+           // while (!line.equals("Over"))
+           // {
                 try
                 {
-                    line = in.readUTF();
-                    System.out.println(line);
+                    int[][] board;
+                    board= (int[][]) in.readObject();
+                    Debugger.showMatrix(board);
+                    Runnable solve = new Solver(board);
+                    solve.run();
+                    Debugger.showMatrix(board);
+                    out.writeObject(board);
  
                 }
                 catch(IOException i)
                 {
                     System.out.println(i);
                 }
-            }
+                catch (ClassNotFoundException i){ System.out.println(i);}
+         //   }
             System.out.println("Closing connection");
  
             // close connection

@@ -1,11 +1,13 @@
 package SmasherClient;
 
+import javax.management.ObjectInstance;
 import java.io.*;
 import java.net.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.security.PublicKey;
 
 public class Client {
     private Socket socket = null;
@@ -31,6 +33,13 @@ public class Client {
 
     }
 
+    public void sendPuzzle(int[][] board){
+        try {
+            ObjectOutputStream obj_out= new ObjectOutputStream(socket.getOutputStream());
+            obj_out.writeObject(board);
+        }catch (IOException e)  {System.out.println(e);}
+    }
+
     public void sendInput(String lines){
         // send input to server
         try {
@@ -39,6 +48,19 @@ public class Client {
             System.out.println("Sending Error");
         }
 
+    }
+
+    public int[][] getPuzzle()
+    {
+        int[][] board = new int[9][9];
+        try {
+            ObjectInputStream obj_in = new ObjectInputStream(socket.getInputStream());
+
+            board = (int[][]) obj_in.readObject();
+
+        }catch (IOException e){System.out.println(e);}
+        catch (ClassNotFoundException e) {e.printStackTrace();}
+        return board;
     }
 
     public String receiveSolver(){
