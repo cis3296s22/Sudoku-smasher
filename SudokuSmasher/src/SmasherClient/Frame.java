@@ -16,28 +16,47 @@ public class Frame {
     }
     public void createAndShowGUI() {
 
-        ArrayList<JTextField> boxes = new ArrayList<JTextField>();
+        ArrayList<JTextField> boxes = new ArrayList<>();
         final Border fieldBorder = BorderFactory.createLineBorder(Color.BLACK);
 
+        Font font1 = new Font("SansSerif", Font.BOLD, 30);
         final JPanel mainGrid = new JPanel(new GridLayout(3, 0));
+        mainGrid.setPreferredSize(new Dimension(700, 700));
+        mainGrid.setBorder(new EmptyBorder(5,5,0,0));
+        mainGrid.setBackground(Color.black);
         for (int i = 0; i < 9; ++i) {
             final JPanel grid = new JPanel(new GridLayout(3, 0));
             for (int j = 0; j < 9; j++) {
                 final JTextField field = new JTextField(2);
+                field.setFont(font1);
                 boxes.add(field);
                 field.setHorizontalAlignment(JTextField.CENTER); //Center text horizontally in the text field.
                 field.setBorder(fieldBorder); //Add the colored border.
                 grid.add(field);
             }
             grid.setBorder(new EmptyBorder(0,0,5,5));
+            grid.setBackground(Color.black);
             mainGrid.add(grid);
         }
 
-        final JPanel centeredGrid = new JPanel(new GridBagLayout());
+        final JPanel centeredGrid = new JPanel();
+        centeredGrid.setLayout(new BoxLayout(centeredGrid, BoxLayout.PAGE_AXIS));
+        centeredGrid.setBackground(new Color(0,120,0));
         centeredGrid.add(mainGrid);
+        centeredGrid.setBorder(new EmptyBorder(10,10,10,10));
+
+        final JPanel buttonSection = new JPanel(new GridLayout(1,3));
+//        buttonSection.setLayout(new BoxLayout(buttonSection, BoxLayout.X_AXIS));
+        buttonSection.setBorder(new EmptyBorder(5,5,0,5));
+        buttonSection.setBackground(new Color(0,120,0));
+        buttonSection.setPreferredSize(new Dimension(300, 100));
 
         final JButton submitBut = new JButton("Submit");
-        centeredGrid.add(submitBut);
+        submitBut.setBackground(Color.pink);
+        submitBut.setPreferredSize(new Dimension(100,10));
+        buttonSection.add(submitBut);
+
+        centeredGrid.add(buttonSection);
         submitBut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
