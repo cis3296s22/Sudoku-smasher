@@ -1,12 +1,13 @@
 package SmasherClient;
-
+import music.Player;
 import SmasherClient.Frame;
 import SmasherServer.Debugger;
+
 
 public class ClientMain {
     public static void main(String[] args)
     {
-
+        Player.getSound("sound/BGM.wav");
         int[][] testBoard = new int[][] {
                 { 3, 0, 6, 5, 0, 8, 4, 0, 0 },
                 { 5, 2, 0, 0, 0, 0, 0, 0, 0 },
