@@ -26,51 +26,51 @@ public class Server {
         try{
             server = new ServerSocket(port);
             System.out.println("Server started");
- 
+
             System.out.println("Waiting for a client ...");
 
             // Server blocks waiting for a new connection from client
             socket = server.accept();
             System.out.println("Client accepted");
- 
+            socket.close();
             // takes input from the client socket
-            in = new ObjectInputStream(socket.getInputStream());
-            out = new ObjectOutputStream(socket.getOutputStream());
+            //          in = new ObjectInputStream(socket.getInputStream());
+            //         out = new ObjectOutputStream(socket.getOutputStream());
 
-            System.out.println(in);
+//            System.out.println(in);
 
 //            System.out.println("before thread");
 //            Runnable test = new Solver(socket);
 //            test.run();
 //            System.out.println("after thread");
 
-         //   String line = "";
- 
+            //   String line = "";
+
             // reads message from client until "Over" is sent
-           // while (!line.equals("Over"))
-           // {
-                try
-                {
-                    int[][] board;
-                    board= (int[][]) in.readObject();
-                    Debugger.showMatrix(board);
-                    Runnable solve = new Solver(board);
-                    solve.run();
-                    Debugger.showMatrix(board);
-                    out.writeObject(board);
- 
-                }
-                catch(IOException i)
-                {
-                    System.out.println(i);
-                }
-                catch (ClassNotFoundException i){ System.out.println(i);}
-         //   }
+            // while (!line.equals("Over"))
+            // {
+//                try
+//                {
+//                    int[][] board;
+//                    board= (int[][]) in.readObject();
+//                    Debugger.showMatrix(board);
+//                    Runnable solve = new Solver(board);
+//                    solve.run();
+//                    Debugger.showMatrix(board);
+//                    out.writeObject(board);
+
+//                }
+//                catch(IOException i)
+//                {
+//                    System.out.println(i);
+//                }
+//                catch (ClassNotFoundException i){ System.out.println(i);}
+            //   }
             System.out.println("Closing connection");
- 
+
             // close connection
             socket.close();
-            in.close();
+//            in.close();
         }
         catch(IOException i)
         {
