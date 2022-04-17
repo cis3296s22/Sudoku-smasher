@@ -88,7 +88,15 @@ public class Frame {
                     sudokuMatrix[row + rowOffset][(i % 3) + colOffset] = num;
                 }
                 client.sendPuzzle(sudokuMatrix);
-                Debugger.showMatrix(sudokuMatrix);
+                //Debugger.showMatrix(sudokuMatrix);
+                int[][] board = client.getPuzzle();
+                for(int i = 0 ; i < 9 ; i++){
+                    for(int j = 0 ; j < 9; j++)
+                    {
+                        //should check to see if =-1, break and show dialog popup box that the puzzle is wrong
+                        boxes.get((i*9)+j).setText(String.valueOf(board[i][j]));
+                    }
+                }
             }
         });
 
@@ -98,6 +106,11 @@ public class Frame {
         frame.pack();
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
+    }
+
+    public void updateBoard (int[][] board)
+    {
+
     }
 
     public int[][] getSudokuMatrix() {

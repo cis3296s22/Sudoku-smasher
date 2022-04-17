@@ -16,19 +16,7 @@ public class ServerMain
     {
        // Server server = new Server(3000);
         final int port = 3000;
-        final int MAXTHREADS = 6;
-        Solver solvers[] = new Solver[MAXTHREADS];
-//        SafeQueue connections = new SafeQueue();
         ServerSocket server = null;
-
-
-//        for(int i = 0 ; i < MAXTHREADS ; i++)
-//        {
-//            solvers[i] = new Solver(connections);
-//             solvers[i].run();
-//            System.out.println("thread " + i + " running");
-//
-//        }
         try { server = new ServerSocket(port); }
         catch (IOException e) {e.printStackTrace();}
 
@@ -53,12 +41,5 @@ public class ServerMain
         }
 
         }
-//        Runnable a = new Solver(testBoard);
-//        Runnable b = new Solver(badTestBoard);
-//        a.run();
-//        b.run();
-//        Debugger.showMatrix(testBoard);
 
-    }
-
-//}
+}

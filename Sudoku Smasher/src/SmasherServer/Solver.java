@@ -33,7 +33,7 @@ public class Solver implements Runnable{
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1 }
         };
     }
-
+    //some bad puzzles give this a very long runtime not really sure why
     @Override
     public void run() {
   //      while (true) {
@@ -61,15 +61,16 @@ public class Solver implements Runnable{
                 e.printStackTrace();
             }
 
-            if (solveSudoku(board)) {
+            if (solveSudoku(board))
+            {
                 System.out.println("we did it!");
                 try {
                     output_stream.writeObject(board);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else
-                System.out.println("uh oh...");
+            }else
+                System.out.println("failed solve...");
             try {
                 output_stream.writeObject(BAD_BOARD);
             } catch (IOException e) {
@@ -99,7 +100,7 @@ public class Solver implements Runnable{
     private static boolean isValidGuess(int[][] board,
                                         int row, int col,
                                         int entry){
-
+        System.out.println("validating...");
         //check for any clashes in the row
         for (int i = 0 ; i < board_size ; i++)
         {
