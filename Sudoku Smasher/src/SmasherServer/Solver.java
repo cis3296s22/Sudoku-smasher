@@ -4,17 +4,16 @@ import  java.net.*;
 import  java.io.*;
 
 public class Solver implements Runnable{
- //   private final int[][] BAD_BOARD; need to flag bad puzzles somehow maybe send board of all -1?
+    private final int[][] BAD_BOARD; //need to flag bad puzzles somehow maybe send board of all -1?
     private int[][] board;
     private Socket socket;
-//    private Socket  socket;
-//    private ObjectInputStream input_stream;
-//    private ObjectOutputStream output_stream;
+    private ObjectInputStream input_stream;
+    private ObjectOutputStream output_stream;
     private SafeQueue connection_queue;
 
     public static final int board_size = 9;
 
-    //in the final version this should probably accept a socket connection rather than a board
+    //needs to be initialized with connection_queue to continuously consume from
 
     /**
      * constructor giving access to the board since run() has no arguments
@@ -23,10 +22,22 @@ public class Solver implements Runnable{
     public Solver(Socket socket)
     {
             this.socket = socket;
+        this.BAD_BOARD = new int[][] {
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1 }
+        };
     }
 
     @Override
-    public void run() {
+    public void run()
+    {
 //        while(true)
 //        {
 //            try {
@@ -34,29 +45,23 @@ public class Solver implements Runnable{
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
-        ObjectInputStream input_stream = null;
-        ObjectOutputStream output_stream = null;
-        try{
+//        ObjectInputStream input_stream = null;
+//        ObjectOutputStream output_stream = null;
+        try
+        {
                 input_stream = new ObjectInputStream(socket.getInputStream());
                 output_stream = new ObjectOutputStream(socket.getOutputStream());
-                //board = (int[][]) input_stream.readObject();
-            }
-            catch (IOException e){System.out.println(e);}
-            //catch (ClassNotFoundException e) {e.printStackTrace();}
-//
-//            try {
-//                this.wait(10000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-            try {
-                board = (int[][]) input_stream.readObject();
-                System.out.println("read board");
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        }
+        catch (IOException e){System.out.println(e);}
+
+        try
+        {
+            board = (int[][]) input_stream.readObject();
+            System.out.println("read board");
+        }
+        catch (IOException e) {e.printStackTrace();}
+        catch (ClassNotFoundException e) {e.printStackTrace();}
+
             if(solveSudoku(board))
             {
                 System.out.println("we did it!");
@@ -65,6 +70,8 @@ public class Solver implements Runnable{
             }
             else
                 System.out.println("uh oh...");
+            try{output_stream.writeObject(BAD_BOARD);}
+            catch (IOException e){e.printStackTrace();}
 
        // }
 
