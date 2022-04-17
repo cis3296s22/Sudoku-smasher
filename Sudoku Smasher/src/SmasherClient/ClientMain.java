@@ -18,7 +18,7 @@ public class ClientMain {
                 { 0, 0, 5, 2, 0, 6, 3, 0, 0 }
         };
 
-        Frame.createAndShowGUI();
+        //Frame.createAndShowGUI();
         int port = 3000;
         Client client = new Client(port);
         client.sendPuzzle(testBoard);

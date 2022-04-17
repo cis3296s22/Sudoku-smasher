@@ -32,10 +32,12 @@ public class Server {
             // Server blocks waiting for a new connection from client
             socket = server.accept();
             System.out.println("Client accepted");
- 
+            Runnable solve = new Solver(socket);
+            solve.run();
+            socket.close();
             // takes input from the client socket
-            in = new ObjectInputStream(socket.getInputStream());
-            out = new ObjectOutputStream(socket.getOutputStream());
+  //          in = new ObjectInputStream(socket.getInputStream());
+   //         out = new ObjectOutputStream(socket.getOutputStream());
 
             System.out.println(in);
 
@@ -49,28 +51,28 @@ public class Server {
             // reads message from client until "Over" is sent
            // while (!line.equals("Over"))
            // {
-                try
-                {
-                    int[][] board;
-                    board= (int[][]) in.readObject();
-                    Debugger.showMatrix(board);
-                    Runnable solve = new Solver(board);
-                    solve.run();
-                    Debugger.showMatrix(board);
-                    out.writeObject(board);
+//                try
+//                {
+//                    int[][] board;
+//                    board= (int[][]) in.readObject();
+//                    Debugger.showMatrix(board);
+//                    Runnable solve = new Solver(board);
+//                    solve.run();
+//                    Debugger.showMatrix(board);
+//                    out.writeObject(board);
  
-                }
-                catch(IOException i)
-                {
-                    System.out.println(i);
-                }
-                catch (ClassNotFoundException i){ System.out.println(i);}
+//                }
+//                catch(IOException i)
+//                {
+//                    System.out.println(i);
+//                }
+//                catch (ClassNotFoundException i){ System.out.println(i);}
          //   }
             System.out.println("Closing connection");
  
             // close connection
             socket.close();
-            in.close();
+//            in.close();
         }
         catch(IOException i)
         {

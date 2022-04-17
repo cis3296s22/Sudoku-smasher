@@ -4,7 +4,9 @@ import  java.net.*;
 import  java.io.*;
 
 public class Solver implements Runnable{
+ //   private final int[][] BAD_BOARD; need to flag bad puzzles somehow maybe send board of all -1?
     private int[][] board;
+    private Socket socket;
 //    private Socket  socket;
 //    private ObjectInputStream input_stream;
 //    private ObjectOutputStream output_stream;
@@ -18,9 +20,9 @@ public class Solver implements Runnable{
      * constructor giving access to the board since run() has no arguments
      * @param socket its a socket
      */
-    public Solver(int[][] board)
+    public Solver(Socket socket)
     {
-            this.board = board;
+            this.socket = socket;
     }
 
     @Override
@@ -32,12 +34,14 @@ public class Solver implements Runnable{
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
-//            try{
-//                input_stream = new ObjectInputStream(socket.getInputStream());
-//                output_stream = new ObjectOutputStream(socket.getOutputStream());
-//                //board = (int[][]) input_stream.readObject();
-//            }
-  //          catch (IOException e){System.out.println(e);}
+        ObjectInputStream input_stream = null;
+        ObjectOutputStream output_stream = null;
+        try{
+                input_stream = new ObjectInputStream(socket.getInputStream());
+                output_stream = new ObjectOutputStream(socket.getOutputStream());
+                //board = (int[][]) input_stream.readObject();
+            }
+            catch (IOException e){System.out.println(e);}
             //catch (ClassNotFoundException e) {e.printStackTrace();}
 //
 //            try {
@@ -45,18 +49,19 @@ public class Solver implements Runnable{
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
-//            try {
-//                board = (int[][]) input_stream.readObject();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            } catch (ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                board = (int[][]) input_stream.readObject();
+                System.out.println("read board");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             if(solveSudoku(board))
             {
                 System.out.println("we did it!");
-  //              try {output_stream.writeObject(board);}
- //               catch (IOException e) {e.printStackTrace();}
+                try {output_stream.writeObject(board);}
+                catch (IOException e) {e.printStackTrace();}
             }
             else
                 System.out.println("uh oh...");
