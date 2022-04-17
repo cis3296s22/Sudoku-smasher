@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SmasherSever">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/SudokuSmasher/out/artifacts/Sudoku_Smasher_jar2/SmasherSever.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

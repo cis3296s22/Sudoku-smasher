@@ -5,12 +5,14 @@ Sudoku Smasher is a desktop client/remote server sudoku puzzle solver written in
 
 # How to run   
 - Download the latest binary from the Release section on the right on GitHub.  
-- Open a shell and navigate to where the .jar file has been downloaded.
-- Run on the command line with
+- Open two shells and navigate to where the .jar files have been downloaded.
+- Run on the command line with one command per shell window
 ```
-java -jar Sudoku-smasher.jar  
+java -jar Server.jar
+java -jar Client.jar  
 ```
-- You will see the output of a good and bad puzzle run in the terminal 
+- You will see terminal outputs for both programs as well as a GUI
+- The programs will not function properly if the client is run before the server
 
 # How to contribute
 Follow this project board to know the latest status of the project: https://trello.com/b/JFsOyaK5/sudoku-board
@@ -20,6 +22,7 @@ Please send a message to one of us if you would like to contribute
 - Use this github repository: ... 
 - The most recent, stable release will be on the main branch. Other branches will be implementing features in progress.
 - The most recent version of Intellij is recommended although the project should work on any Java IDE.
+- For the client, make sure the MANIFEST.MF file says Main-Class:SmasherClient.ClientMain. For the server it should read Main-Class:SmasherServer.ServerMain
 - In Intellij, navigate to File > Project Structure > Artifacts
 - Click the plus button to add a new artifact, select 'from modules with dependencies'
 - Select the main function in the package you are trying to build and hit 'ok'.
