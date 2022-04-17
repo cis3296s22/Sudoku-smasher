@@ -21,7 +21,7 @@ public class Solver implements Runnable{
      */
     public Solver(Socket socket)
     {
-            this.socket = socket;
+        this.socket = socket;
         this.BAD_BOARD = new int[][] {
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
@@ -49,8 +49,8 @@ public class Solver implements Runnable{
 //        ObjectOutputStream output_stream = null;
         try
         {
-                input_stream = new ObjectInputStream(socket.getInputStream());
-                output_stream = new ObjectOutputStream(socket.getOutputStream());
+            input_stream = new ObjectInputStream(socket.getInputStream());
+            output_stream = new ObjectOutputStream(socket.getOutputStream());
         }
         catch (IOException e){System.out.println(e);}
 
@@ -62,18 +62,24 @@ public class Solver implements Runnable{
         catch (IOException e) {e.printStackTrace();}
         catch (ClassNotFoundException e) {e.printStackTrace();}
 
-            if(solveSudoku(board))
-            {
-                System.out.println("we did it!");
-                try {output_stream.writeObject(board);}
-                catch (IOException e) {e.printStackTrace();}
-            }
-            else
-                System.out.println("uh oh...");
-            try{output_stream.writeObject(BAD_BOARD);}
-            catch (IOException e){e.printStackTrace();}
-
-       // }
+        if(solveSudoku(board))
+        {
+            System.out.println("we did it!");
+            try {output_stream.writeObject(board);}
+            catch (IOException e) {e.printStackTrace();}
+        }
+        else
+            System.out.println("uh oh...");
+        try{output_stream.writeObject(BAD_BOARD);}
+        catch (IOException e){e.printStackTrace();}
+        try
+        {
+            socket.close();
+            input_stream.close();
+            output_stream.close();
+        }
+        catch (IOException e){e.printStackTrace();}
+        // }
 
     }
 
@@ -87,8 +93,8 @@ public class Solver implements Runnable{
      * @return true if a possibly correct entry, false if not
      */
     private static boolean isValidGuess(int[][] board,
-                                     int row, int col,
-                                     int entry){
+                                        int row, int col,
+                                        int entry){
 
         //check for any clashes in the row
         for (int i = 0 ; i < board_size ; i++)

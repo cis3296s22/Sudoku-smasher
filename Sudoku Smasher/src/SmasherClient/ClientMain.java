@@ -23,8 +23,8 @@ public class ClientMain {
         int port = 3000;
         Client client = new Client(port);
         Frame frame = new Frame(client);
-        frame.createAndShowGUI();
-//        client.sendPuzzle(testBoard);
+//        frame.createAndShowGUI();
+        client.sendPuzzle(testBoard);
         Debugger.showMatrix(client.getPuzzle());
     }
 }
