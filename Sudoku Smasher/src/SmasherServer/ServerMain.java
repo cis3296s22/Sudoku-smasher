@@ -5,54 +5,53 @@ package SmasherServer;
 //Mary Kate Durnan
 //Robert Stachurski
 
-//import SmasherClient.Frame;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.ServerSocket;
 
 public class ServerMain
 {
 
     public static void main(String[] args)
     {
-        Server server = new Server(3000);
+       // Server server = new Server(3000);
+        final int port = 3000;
         final int MAXTHREADS = 6;
         Solver solvers[] = new Solver[MAXTHREADS];
-//        Frame.createAndShowGUI();
-//        SafeQueue connections = new SafeQueue(MAXTHREADS);
+//        SafeQueue connections = new SafeQueue();
+        ServerSocket server = null;
 
 
-//        for(int i = 0 ; i < MAXTHREADS ; i++) {
+//        for(int i = 0 ; i < MAXTHREADS ; i++)
+//        {
 //            solvers[i] = new Solver(connections);
-//            System.out.println("Hello");
-//           // solvers[i].run();
+//             solvers[i].run();
+//            System.out.println("thread " + i + " running");
+//
 //        }
+        try { server = new ServerSocket(port); }
+        catch (IOException e) {e.printStackTrace();}
 
 
-//        int[][] testBoard = new int[][] {
-//                { 3, 0, 6, 5, 0, 8, 4, 0, 0 },
-//                { 5, 2, 0, 0, 0, 0, 0, 0, 0 },
-//                { 0, 8, 7, 0, 0, 0, 0, 3, 1 },
-//                { 0, 0, 3, 0, 1, 0, 0, 8, 0 },
-//                { 9, 0, 0, 8, 6, 3, 0, 0, 5 },
-//                { 0, 5, 0, 0, 9, 0, 6, 0, 0 },
-//                { 1, 3, 0, 0, 0, 0, 2, 5, 0 },
-//                { 0, 0, 0, 0, 0, 0, 0, 7, 4 },
-//                { 0, 0, 5, 2, 0, 6, 3, 0, 0 }
-//        };
-//        int[][] badTestBoard = new int[][] {
-//                { 3, 3, 6, 5, 0, 8, 4, 0, 0 },
-//                { 5, 2, 0, 0, 0, 0, 0, 0, 0 },
-//                { 0, 8, 7, 0, 0, 0, 0, 3, 1 },
-//                { 0, 0, 3, 0, 1, 0, 0, 8, 0 },
-//                { 9, 0, 0, 8, 6, 3, 0, 0, 5 },
-//                { 0, 5, 0, 0, 9, 0, 6, 0, 0 },
-//                { 1, 3, 1, 0, 0, 0, 2, 5, 0 },
-//                { 0, 0, 0, 0, 0, 0, 0, 7, 4 },
-//                { 0, 0, 5, 2, 0, 6, 3, 0, 2 }
-//        };
+
+
         //server accept loop
         while(true)
         {
-            System.out.println("placeholder...");
-            break;
+            try
+            {
+                System.out.println("Waiting for new client...");
+                Socket client = server.accept();
+                System.out.println("Client accepted...");
+                Runnable solve = new Solver(client);
+                solve.run();
+                client.close();
+            }
+            catch (IOException e){e.printStackTrace();}
+
+
+        }
+
         }
 //        Runnable a = new Solver(testBoard);
 //        Runnable b = new Solver(badTestBoard);
@@ -62,4 +61,4 @@ public class ServerMain
 
     }
 
-}
+//}

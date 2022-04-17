@@ -17,7 +17,6 @@ public class Solver implements Runnable{
 
     /**
      * constructor giving access to the board since run() has no arguments
-     * @param socket its a socket
      */
     public Solver(Socket socket)
     {
@@ -36,52 +35,57 @@ public class Solver implements Runnable{
     }
 
     @Override
-    public void run()
-    {
-//        while(true)
-//        {
+    public void run() {
+  //      while (true) {
 //            try {
+//                System.out.println("before");
 //                socket = connection_queue.take();
+//                System.out.println("after");
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
-//        ObjectInputStream input_stream = null;
-//        ObjectOutputStream output_stream = null;
-        try
-        {
-            input_stream = new ObjectInputStream(socket.getInputStream());
-            output_stream = new ObjectOutputStream(socket.getOutputStream());
-        }
-        catch (IOException e){System.out.println(e);}
 
-        try
-        {
-            board = (int[][]) input_stream.readObject();
-            System.out.println("read board");
-        }
-        catch (IOException e) {e.printStackTrace();}
-        catch (ClassNotFoundException e) {e.printStackTrace();}
+            try {
+                input_stream = new ObjectInputStream(socket.getInputStream());
+                output_stream = new ObjectOutputStream(socket.getOutputStream());
+            } catch (IOException e) {
+                System.out.println(e);
+            }
 
-        if(solveSudoku(board))
-        {
-            System.out.println("we did it!");
-            try {output_stream.writeObject(board);}
-            catch (IOException e) {e.printStackTrace();}
-        }
-        else
-            System.out.println("uh oh...");
-        try{output_stream.writeObject(BAD_BOARD);}
-        catch (IOException e){e.printStackTrace();}
-        try
-        {
-            socket.close();
-            input_stream.close();
-            output_stream.close();
-        }
-        catch (IOException e){e.printStackTrace();}
-        // }
+            try {
+                board = (int[][]) input_stream.readObject();
+                System.out.println("read board");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
-    }
+            if (solveSudoku(board)) {
+                System.out.println("we did it!");
+                try {
+                    output_stream.writeObject(board);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else
+                System.out.println("uh oh...");
+            try {
+                output_stream.writeObject(BAD_BOARD);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                socket.close();
+                input_stream.close();
+                output_stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // }
+
+        }
+   // }
 
     /**
      * Checks whether the guess 'entry' at position [row][col] violates the rules of sudoku or not

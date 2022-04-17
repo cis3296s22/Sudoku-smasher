@@ -25,13 +25,13 @@ public class SafeQueue
     /**add a sock
      * @param socket Socket accepted from the main server class
      */
-    public synchronized void add (Socket socket) throws InterruptedException
+    public  void add (Socket socket) throws InterruptedException
     {
         jobs_available.release();
         connection_queue.add(socket);
     }
 
-    public synchronized Socket take() throws InterruptedException {
+    public  Socket take() throws InterruptedException {
         jobs_available.acquire();
         return connection_queue.poll();
     }

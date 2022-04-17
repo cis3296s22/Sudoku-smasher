@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Sudoku Smasher/Sudoku Smasher.iml" filepath="$PROJECT_DIR$/Sudoku Smasher/Sudoku Smasher.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Sudoku-smasher.iml" filepath="$PROJECT_DIR$/.idea/Sudoku-smasher.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SudokuSmasher/SudokuSmasher.iml" filepath="$PROJECT_DIR$/SudokuSmasher/SudokuSmasher.iml" />
     </modules>
   </component>
 </project>

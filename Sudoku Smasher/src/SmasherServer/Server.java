@@ -32,14 +32,12 @@ public class Server {
             // Server blocks waiting for a new connection from client
             socket = server.accept();
             System.out.println("Client accepted");
-            Runnable solve = new Solver(socket);
-            solve.run();
             socket.close();
             // takes input from the client socket
             //          in = new ObjectInputStream(socket.getInputStream());
             //         out = new ObjectOutputStream(socket.getOutputStream());
 
-            System.out.println(in);
+//            System.out.println(in);
 
 //            System.out.println("before thread");
 //            Runnable test = new Solver(socket);
