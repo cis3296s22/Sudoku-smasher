@@ -89,7 +89,7 @@ public class Solver implements Runnable{
         for (int i = 0; i < board_size; i++) {
             for (int j = 0; j < board_size; j++) {
                 if (board[i][j] != 0){
-                    if(!validateBoard(board, i,j,board[i][j])){
+                    if(!isValidGuess(board, i,j,board[i][j])){
                         return false;
                     }
                 }
@@ -97,43 +97,7 @@ public class Solver implements Runnable{
         }
         return true;
     }
-    private static boolean validateBoard(int[][] board,
-                                         int row, int col,
-                                         int entry){
-        System.out.println("validating...");
-        //check for any clashes in the row
-        for (int i = 0 ; i < board_size ; i++)
-        {
-            if(board[row][i] == entry && i != col){
-                return false;
-            }
 
-        }
-
-        //check for any clashes in the column
-        for(int i = 0 ; i < board_size ; i++)
-        {
-            if(board[i][col] == entry && i != row){
-                return false;
-            }
-        }
-        //check for any clashes in the 3x3 box
-        int boxRow = row - row%3;
-        int boxCol = col - col%3;
-
-        for(int r = boxRow ; r < (boxRow+3) ; r++)
-        {
-            for (int c = boxCol ; c < boxCol+3 ; c++)
-            {
-                if(board[r][c] == entry && c != col && r != row){
-                    return false;
-                }
-
-            }
-        }
-        //if we get here then there are no clashes, return true
-        return true;
-    }
     /**
      * Checks whether the guess 'entry' at position [row][col] violates the rules of sudoku or not
      * @param board a 2d array representing the current sudoku board
@@ -149,7 +113,7 @@ public class Solver implements Runnable{
         //check for any clashes in the row
         for (int i = 0 ; i < board_size ; i++)
         {
-            if(board[row][i] == entry){
+            if(board[row][i] == entry && i != col ){
                 return false;
             }
 
@@ -158,7 +122,7 @@ public class Solver implements Runnable{
         //check for any clashes in the column
         for(int i = 0 ; i < board_size ; i++)
         {
-            if(board[i][col] == entry){
+            if(board[row][i] == entry && i != col){
                 return false;
             }
 
@@ -172,7 +136,7 @@ public class Solver implements Runnable{
         {
             for (int c = boxCol ; c < boxCol+3 ; c++)
             {
-                if(board[r][c] == entry){
+                if(board[r][c] == entry && c != col && r != row){
                     return false;
                 }
 
