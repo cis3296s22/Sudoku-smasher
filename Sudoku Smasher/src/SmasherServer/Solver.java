@@ -6,7 +6,7 @@ import  java.io.*;
 public class Solver implements Runnable{
     private final int[][] BAD_BOARD; //need to flag bad puzzles somehow maybe send board of all -1?
     private int[][] board;
-    private Socket socket;
+    private final Socket socket;
     private ObjectInputStream input_stream;
     private ObjectOutputStream output_stream;
     private SafeQueue connection_queue;
@@ -60,10 +60,11 @@ public class Solver implements Runnable{
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
-            if (solveSudoku(board))
+            isValidBoard(board);
+            if (isValidBoard(board) && solveSudoku(board))
             {
                 System.out.println("we did it!");
+                Debugger.showMatrix(board);
                 try {
                     output_stream.writeObject(board);
                 } catch (IOException e) {
@@ -83,14 +84,59 @@ public class Solver implements Runnable{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            // }
+        }
+    private static boolean isValidBoard(int[][] board){
+        for (int i = 0; i < board_size; i++) {
+            for (int j = 0; j < board_size; j++) {
+                if (board[i][j] != 0){
+                    if(!validateBoard(board, i,j,board[i][j])){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    private static boolean validateBoard(int[][] board,
+                                         int row, int col,
+                                         int entry){
+        System.out.println("validating...");
+        //check for any clashes in the row
+        for (int i = 0 ; i < board_size ; i++)
+        {
+            if(board[row][i] == entry && i != col){
+                return false;
+            }
 
         }
-   // }
 
+        //check for any clashes in the column
+        for(int i = 0 ; i < board_size ; i++)
+        {
+            if(board[i][col] == entry && i != row){
+                return false;
+            }
+        }
+        //check for any clashes in the 3x3 box
+        int boxRow = row - row%3;
+        int boxCol = col - col%3;
+
+        for(int r = boxRow ; r < (boxRow+3) ; r++)
+        {
+            for (int c = boxCol ; c < boxCol+3 ; c++)
+            {
+                if(board[r][c] == entry && c != col && r != row){
+                    return false;
+                }
+
+            }
+        }
+        //if we get here then there are no clashes, return true
+        return true;
+    }
     /**
      * Checks whether the guess 'entry' at position [row][col] violates the rules of sudoku or not
-     * @param board a 2d array representing the current soduku board
+     * @param board a 2d array representing the current sudoku board
      * @param row the row position of the guessed entry
      * @param col the column position of the guessed entry
      * @param entry an int representing the guessed number
@@ -100,19 +146,22 @@ public class Solver implements Runnable{
     private static boolean isValidGuess(int[][] board,
                                         int row, int col,
                                         int entry){
-        System.out.println("validating...");
         //check for any clashes in the row
         for (int i = 0 ; i < board_size ; i++)
         {
-            if(board[row][i] == entry)
+            if(board[row][i] == entry){
                 return false;
+            }
+
         }
 
         //check for any clashes in the column
         for(int i = 0 ; i < board_size ; i++)
         {
-            if(board[i][col] == entry)
+            if(board[i][col] == entry){
                 return false;
+            }
+
         }
 
         //check for any clashes in the 3x3 box
@@ -123,8 +172,10 @@ public class Solver implements Runnable{
         {
             for (int c = boxCol ; c < boxCol+3 ; c++)
             {
-                if(board[r][c] == entry)
+                if(board[r][c] == entry){
                     return false;
+                }
+
             }
         }
         //if we get here then there are no clashes, return true
