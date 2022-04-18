@@ -57,6 +57,9 @@ public class Frame {
         buttonSection.add(submitBut);
 
         centeredGrid.add(buttonSection);
+
+        final JFrame frame = new JFrame("Sudoku");
+
         submitBut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,17 +93,26 @@ public class Frame {
                 client.sendPuzzle(sudokuMatrix);
                 //Debugger.showMatrix(sudokuMatrix);
                 int[][] board = client.getPuzzle();
+
+                boolean sudoku_is_valid = true; // Initialize to true.
                 for(int i = 0 ; i < 9 ; i++){
                     for(int j = 0 ; j < 9; j++)
                     {
                         //should check to see if =-1, break and show dialog popup box that the puzzle is wrong
+                        int calculated_box_value = board[i][j];
+                        if(calculated_box_value == -1) {
+                            sudoku_is_valid = false;
+                        }
                         boxes.get((i*9)+j).setText(String.valueOf(board[i][j]));
                     }
+                }
+
+                if(!sudoku_is_valid){
+                    JOptionPane.showMessageDialog(frame, "Sudoku is not properly formatted");
                 }
             }
         });
 
-        final JFrame frame = new JFrame("Sudoku");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(centeredGrid);
         frame.pack();

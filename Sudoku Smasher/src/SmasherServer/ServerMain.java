@@ -41,14 +41,12 @@ public class ServerMain
 
 
         }*/
-        ServerSocket server ;
-        Socket client ;
         try{
-            server = new ServerSocket(port);
+            ServerSocket server = new ServerSocket(port);
             try{
                 while(true){
                     System.out.println("Waiting for new client...");
-                    client = server.accept();
+                    Socket client = server.accept();
                     System.out.println("Client accepted...");
                     Runnable solve = new Solver(client);
                     solve.run();
