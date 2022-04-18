@@ -11,9 +11,11 @@ import java.net.ServerSocket;
 
 public class ServerMain
 {
+    public final static int port = 3000;
 
     public static void main(String[] args)
     {
+        /*
        // Server server = new Server(3000);
         final int port = 3000;
         ServerSocket server = null;
@@ -38,8 +40,29 @@ public class ServerMain
             catch (IOException e){e.printStackTrace();}
 
 
+        }*/
+        ServerSocket server ;
+        Socket client ;
+        try{
+            server = new ServerSocket(port);
+            try{
+                while(true){
+                    System.out.println("Waiting for new client...");
+                    client = server.accept();
+                    System.out.println("Client accepted...");
+                    Runnable solve = new Solver(client);
+                    solve.run();
+                    client.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        }
+
+    }
 
 }

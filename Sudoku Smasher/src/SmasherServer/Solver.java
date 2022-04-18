@@ -163,15 +163,19 @@ public class Solver implements Runnable{
             return true;
 
         //else for each-row backtrack
+        //int c = 0;
         for (int guess = 1; guess<= board_size ; guess++)
         {
             if(isValidGuess(board, row, col, guess))
             {
+                //System.out.println(c++);
                 board[row][col] = guess;
-                if(solveSudoku(board))
+                if(solveSudoku(board)) {
                     return true;
-                else
+                }
+                else {
                     board[row][col] = 0;
+                }
             }
         }
         return false;
