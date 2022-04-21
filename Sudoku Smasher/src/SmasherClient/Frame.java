@@ -151,6 +151,7 @@ public class Frame {
                                 throw new IllegalArgumentException("CSV is mal-formatted");
                             }
 
+                            // Iterate through columns
                             for(int j = 0; j < lineList.length; j++){
                                 JTextField jtf = boxes.get((i*9)+j);
                                 jtf.setText(lineList[j]);
@@ -166,20 +167,6 @@ public class Frame {
                         throw new RuntimeException(e);
                     }
                 } else {
-
-
-//                    for(int i = 0 ; i < 9 ; i++){
-//                        for(int j = 0 ; j < 9; j++)
-//                        {
-//                            //should check to see if =-1, break and show dialog popup box that the puzzle is wrong
-//                            int calculated_box_value = board[i][j];
-//                            if(calculated_box_value == -1) {
-//                                sudoku_is_valid = false;
-//                            }
-//                            boxes.get((i*9)+j).setText(String.valueOf(board[i][j]));
-//                        }
-//                    }
-
 
                     System.out.println("File does not exist");
                 }
