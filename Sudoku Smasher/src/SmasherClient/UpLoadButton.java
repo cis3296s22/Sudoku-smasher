@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 
-public class UpLoadButton extends JButton {
+public class UpLoadButton{
     private JButton uploadCsvButton;
     private final String MEDIA_ROOT = "data/";
     private final String MEDIA_INPUT_ROOT = MEDIA_ROOT + "input/";

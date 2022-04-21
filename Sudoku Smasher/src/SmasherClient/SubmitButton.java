@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class SubmitButton extends JButton {
+public class SubmitButton{
     private final JButton submitBut;
     private final ArrayList<JTextField> boxes;
     private int[][] board;
@@ -56,6 +56,7 @@ public class SubmitButton extends JButton {
                 client.sendPuzzle(board);
                 Debugger.showMatrix(board);
                 board = client.getPuzzle();
+//                updateBoard(board);
                 if(!updateBoard(board)){
                     JOptionPane.showMessageDialog(frame, "Sudoku is not properly formatted");
                 }
