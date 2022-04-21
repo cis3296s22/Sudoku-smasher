@@ -6,17 +6,24 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.io.*;
 
 public class Frame {
     private final int[][] sudokuMatrix = new int[9][9];
     private final Client client;
+
+    private final String MEDIA_ROOT = "data/";
+    private final String MEDIA_INPUT_ROOT = MEDIA_ROOT + "input/";
+    private final String MEDIA_OUTPUT_ROOT = MEDIA_ROOT + "output/";
+
+    private final ArrayList<JTextField> boxes = new ArrayList<>();
     public Frame(Client client){
         this.client = client;
     }
     public void createAndShowGUI() {
 
-        ArrayList<JTextField> boxes = new ArrayList<>();
         final Border fieldBorder = BorderFactory.createLineBorder(Color.BLACK);
 
         Font font1 = new Font("SansSerif", Font.BOLD, 30);
@@ -51,6 +58,11 @@ public class Frame {
         buttonSection.setBackground(new Color(0,120,0));
         buttonSection.setPreferredSize(new Dimension(300, 100));
 
+        final JButton uploadCsvButton = new JButton("Upload CSV");
+        uploadCsvButton.setBackground(Color.gray);
+        uploadCsvButton.setPreferredSize(new Dimension(20,10));
+        buttonSection.add(uploadCsvButton);
+
         final JButton submitBut = new JButton("Submit");
         submitBut.setBackground(Color.pink);
         submitBut.setPreferredSize(new Dimension(100,10));
@@ -70,8 +82,8 @@ public class Frame {
                 for(int i = 0; i < boxes.size(); i++){
                     JTextField box = boxes.get(i);
                     int num;
-                    if(box.getText().equals("")){
-                        num = 0;
+                    if(box.getText().equals("") || box.getText().equals("0")) {
+                        num = 0; // Server expects empty spaces to  be represented by 0s
                     }else{
                         num = Integer.parseInt(box.getText());
                     }
@@ -91,7 +103,7 @@ public class Frame {
                     sudokuMatrix[row + rowOffset][(i % 3) + colOffset] = num;
                 }
                 client.sendPuzzle(sudokuMatrix);
-                //Debugger.showMatrix(sudokuMatrix);
+                Debugger.showMatrix(sudokuMatrix);
                 int[][] board = client.getPuzzle();
 
                 boolean sudoku_is_valid = true; // Initialize to true.
@@ -110,6 +122,68 @@ public class Frame {
                 if(!sudoku_is_valid){
                     JOptionPane.showMessageDialog(frame, "Sudoku is not properly formatted");
                 }
+            }
+        });
+
+        uploadCsvButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String input_filename = JOptionPane.showInputDialog("Enter the filename (Ensure your file is uploaded to the data/input folder");
+                File file = new File(MEDIA_INPUT_ROOT + input_filename);
+
+                System.out.println(file.getAbsolutePath());
+
+                if(file.exists()){
+                    // Continue with file input stream
+                    System.out.println("File exists!");
+
+                    try {
+                        FileReader fr = new FileReader(file);
+                        BufferedReader br =  new BufferedReader(fr);
+                        int i = 0;
+                        String tmp_line;
+                        while((tmp_line = br.readLine()) != null ){
+
+                            // Split the first line on commas
+                            String[] lineList = tmp_line.split(",");
+
+                            if(lineList.length != 9){
+                                throw new IllegalArgumentException("CSV is mal-formatted");
+                            }
+
+                            for(int j = 0; j < lineList.length; j++){
+                                JTextField jtf = boxes.get((i*9)+j);
+                                jtf.setText(lineList[j]);
+                            }
+                            // Increment row
+                            i = i + 1;
+
+                        }
+
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+
+
+//                    for(int i = 0 ; i < 9 ; i++){
+//                        for(int j = 0 ; j < 9; j++)
+//                        {
+//                            //should check to see if =-1, break and show dialog popup box that the puzzle is wrong
+//                            int calculated_box_value = board[i][j];
+//                            if(calculated_box_value == -1) {
+//                                sudoku_is_valid = false;
+//                            }
+//                            boxes.get((i*9)+j).setText(String.valueOf(board[i][j]));
+//                        }
+//                    }
+
+
+                    System.out.println("File does not exist");
+                }
+
             }
         });
 
