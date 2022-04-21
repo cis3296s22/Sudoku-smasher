@@ -60,8 +60,7 @@ public class Solver implements Runnable{
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-//            isValidBoard(board);
-            if (solveSudoku(board))
+            if (isValidBoard(board) && solveSudoku(board))
             {
                 System.out.println("we did it!");
                 Debugger.showMatrix(board);
