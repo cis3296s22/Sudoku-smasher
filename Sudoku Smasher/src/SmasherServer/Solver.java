@@ -60,8 +60,8 @@ public class Solver implements Runnable{
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            isValidBoard(board);
-            if (isValidBoard(board) && solveSudoku(board))
+//            isValidBoard(board);
+            if (solveSudoku(board))
             {
                 System.out.println("we did it!");
                 Debugger.showMatrix(board);
@@ -89,7 +89,7 @@ public class Solver implements Runnable{
         for (int i = 0; i < board_size; i++) {
             for (int j = 0; j < board_size; j++) {
                 if (board[i][j] != 0){
-                    if(!isValidGuess(board, i,j,board[i][j])){
+                    if(!isValidBoardEntry(board, i,j,board[i][j])){
                         return false;
                     }
                 }
@@ -98,6 +98,39 @@ public class Solver implements Runnable{
         return true;
     }
 
+    private static boolean isValidBoardEntry(int[][] board,
+                                        int row, int col,
+                                        int entry){
+
+        //check for any clashes in the row
+        for (int i = 0 ; i < board_size ; i++)
+        {
+            if(board[row][i] == entry && i != col)
+                return false;
+        }
+
+        //check for any clashes in the column
+        for(int i = 0 ; i < board_size ; i++)
+        {
+            if(board[i][col] == entry && i != row)
+                return false;
+        }
+
+        //check for any clashes in the 3x3 box
+        int boxRow = row - row%3;
+        int boxCol = col - col%3;
+
+        for(int r = boxRow ; r < (boxRow+3) ; r++)
+        {
+            for (int c = boxCol ; c < boxCol+3 ; c++)
+            {
+                if(board[r][c] == entry && r != row && c != col)
+                    return false;
+            }
+        }
+        //if we get here then there are no clashes, return true
+        return true;
+    }
     /**
      * Checks whether the guess 'entry' at position [row][col] violates the rules of sudoku or not
      * @param board a 2d array representing the current sudoku board
@@ -110,22 +143,19 @@ public class Solver implements Runnable{
     private static boolean isValidGuess(int[][] board,
                                         int row, int col,
                                         int entry){
+
         //check for any clashes in the row
         for (int i = 0 ; i < board_size ; i++)
         {
-            if(board[row][i] == entry && i != col ){
+            if(board[row][i] == entry)
                 return false;
-            }
-
         }
 
         //check for any clashes in the column
         for(int i = 0 ; i < board_size ; i++)
         {
-            if(board[row][i] == entry && i != col){
+            if(board[i][col] == entry)
                 return false;
-            }
-
         }
 
         //check for any clashes in the 3x3 box
@@ -136,10 +166,8 @@ public class Solver implements Runnable{
         {
             for (int c = boxCol ; c < boxCol+3 ; c++)
             {
-                if(board[r][c] == entry && c != col && r != row){
+                if(board[r][c] == entry)
                     return false;
-                }
-
             }
         }
         //if we get here then there are no clashes, return true
