@@ -3,10 +3,10 @@ package SmasherServer;
 import  java.net.*;
 import  java.io.*;
 
-public class Solver implements Runnable{
+public class Solver extends Thread{
     private final int[][] BAD_BOARD; //need to flag bad puzzles somehow maybe send board of all -1?
     private int[][] board;
-    private final Socket socket;
+    private Socket socket;
     private ObjectInputStream input_stream;
     private ObjectOutputStream output_stream;
     private SafeQueue connection_queue;
@@ -18,9 +18,9 @@ public class Solver implements Runnable{
     /**
      * constructor giving access to the board since run() has no arguments
      */
-    public Solver(Socket socket)
+    public Solver(SafeQueue buffer)
     {
-        this.socket = socket;
+        this.connection_queue = buffer;
         this.BAD_BOARD = new int[][] {
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
@@ -36,19 +36,19 @@ public class Solver implements Runnable{
     //some bad puzzles give this a very long runtime not really sure why
     @Override
     public void run() {
-  //      while (true) {
-//            try {
-//                System.out.println("before");
-//                socket = connection_queue.take();
-//                System.out.println("after");
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+        while (true) {
+            try {
+                socket = connection_queue.take();
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             try {
                 input_stream = new ObjectInputStream(socket.getInputStream());
                 output_stream = new ObjectOutputStream(socket.getOutputStream());
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 System.out.println(e);
             }
 
@@ -60,16 +60,15 @@ public class Solver implements Runnable{
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            if (isValidBoard(board) && solveSudoku(board))
-            {
-                System.out.println("we did it!");
+            if (isValidBoard(board) && solveSudoku(board)) {
+                System.out.println("Successful solve...");
                 Debugger.showMatrix(board);
                 try {
                     output_stream.writeObject(board);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }else
+            } else
                 System.out.println("failed solve...");
             try {
                 output_stream.writeObject(BAD_BOARD);
@@ -84,6 +83,7 @@ public class Solver implements Runnable{
                 e.printStackTrace();
             }
         }
+    }
     private static boolean isValidBoard(int[][] board){
         for (int i = 0; i < board_size; i++) {
             for (int j = 0; j < board_size; j++) {

@@ -1,38 +1,60 @@
 package SmasherServer;
 
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Semaphore;
 
 //thread safe queue for socket distribution
 public class SafeQueue
 {
-    private ConcurrentLinkedQueue<Socket> connection_queue;
-    private int solvers_running;
-    private final Semaphore jobs_available;
+    private Queue<Socket> connection_queue;
+    private final Lock lock;
+    private final Condition buffer_not_empty;
 
 
     public SafeQueue()
     {
-        connection_queue = new ConcurrentLinkedQueue<Socket>();
-        this.solvers_running = 0;
-        jobs_available = new Semaphore(solvers_running, true);
+        connection_queue = new LinkedList<Socket>();
+        lock = new ReentrantLock();
+        buffer_not_empty = lock.newCondition();
 
     }
 
     /**add a sock
      * @param socket Socket accepted from the main server class
      */
-    public  void add (Socket socket) throws InterruptedException
+    public void add (Socket socket) throws InterruptedException
     {
-        jobs_available.release();
-        connection_queue.add(socket);
+        lock.lock();
+        try
+        {
+            connection_queue.add(socket);
+            buffer_not_empty.signalAll();
+
+        }
+        finally {
+            lock.unlock();
+        }
+
     }
 
     public  Socket take() throws InterruptedException {
-        jobs_available.acquire();
-        return connection_queue.poll();
+        lock.lock();
+        try{
+            while(connection_queue.size() == 0)
+            {
+                System.out.println("Thread " + Thread.currentThread().getName() + " is waiting...");
+                buffer_not_empty.await();
+            }
+            Socket next = connection_queue.poll();
+            return next;
+        }
+        finally {
+            lock.unlock();
+        }
     }
 }
