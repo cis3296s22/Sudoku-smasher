@@ -10,6 +10,7 @@ public class Solver extends Thread{
     private ObjectInputStream input_stream;
     private ObjectOutputStream output_stream;
     private SafeQueue connection_queue;
+    private SafeQueue reports;
 
     public static final int board_size = 9;
 
@@ -18,9 +19,10 @@ public class Solver extends Thread{
     /**
      * constructor giving access to the board since run() has no arguments
      */
-    public Solver(SafeQueue buffer)
+    public Solver(SafeQueue buffer, SafeQueue reports)
     {
         this.connection_queue = buffer;
+        this.reports = reports;
         this.BAD_BOARD = new int[][] {
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1 },
@@ -71,8 +73,11 @@ public class Solver extends Thread{
             } else
                 System.out.println("failed solve...");
             try {
+                reports.add(board);
                 output_stream.writeObject(BAD_BOARD);
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             try {
