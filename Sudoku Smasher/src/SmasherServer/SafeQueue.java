@@ -1,5 +1,6 @@
 package SmasherServer;
 
+import java.io.ObjectStreamException;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -9,30 +10,30 @@ import java.util.concurrent.locks.ReentrantLock;
 
 
 //thread safe queue for socket distribution
-public class SafeQueue
+public class SafeQueue<T>
 {
-    private Queue<Socket> connection_queue;
+    private Queue<T> connection_queue;
     private final Lock lock;
     private final Condition buffer_not_empty;
 
 
     public SafeQueue()
     {
-        connection_queue = new LinkedList<Socket>();
+        connection_queue = new LinkedList<T>();
         lock = new ReentrantLock();
         buffer_not_empty = lock.newCondition();
 
     }
 
     /**add a sock
-     * @param socket Socket accepted from the main server class
+     * @param thing Socket accepted from the main server class
      */
-    public void add (Socket socket) throws InterruptedException
+    public void add (T thing) throws InterruptedException
     {
         lock.lock();
         try
         {
-            connection_queue.add(socket);
+            connection_queue.add(thing);
             buffer_not_empty.signalAll();
 
         }
@@ -42,7 +43,7 @@ public class SafeQueue
 
     }
 
-    public  Socket take() throws InterruptedException {
+    public  T take() throws InterruptedException {
         lock.lock();
         try{
             while(connection_queue.size() == 0)
@@ -50,7 +51,7 @@ public class SafeQueue
                 System.out.println("Thread " + Thread.currentThread().getName() + " is waiting...");
                 buffer_not_empty.await();
             }
-            Socket next = connection_queue.poll();
+            T next = connection_queue.poll();
             return next;
         }
         finally {

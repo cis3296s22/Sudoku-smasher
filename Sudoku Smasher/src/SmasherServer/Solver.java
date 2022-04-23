@@ -38,7 +38,7 @@ public class Solver extends Thread{
     public void run() {
         while (true) {
             try {
-                socket = connection_queue.take();
+                socket = (Socket) connection_queue.take();
             }
             catch (InterruptedException e) {
                 e.printStackTrace();

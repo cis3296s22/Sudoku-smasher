@@ -15,7 +15,7 @@ public class ServerMain
 
     public static void main(String[] args) throws InterruptedException, IOException
     {
-        SafeQueue buffer = new SafeQueue();
+        SafeQueue buffer = new SafeQueue<Socket>();
         Solver[] solvers = new Solver[6];
         ServerSocket server = null;
 
