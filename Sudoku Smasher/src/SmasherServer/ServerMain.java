@@ -13,53 +13,32 @@ public class ServerMain
 {
     public final static int port = 3000;
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws InterruptedException, IOException
     {
-        /*
-       // Server server = new Server(3000);
-        final int port = 3000;
+        SafeQueue buffer = new SafeQueue<Socket>();
+        SafeQueue reports = new SafeQueue<int[][]>();
+        Solver[] solvers = new Solver[6];
+        Logger logger = new Logger(reports);
         ServerSocket server = null;
-        try { server = new ServerSocket(port); }
-        catch (IOException e) {e.printStackTrace();}
 
-
-
-
-        //server accept loop
-        while(true)
-        {
-            try
-            {
+        try {
+            server = new ServerSocket(port);
+            for (Solver current : solvers) {
+                current = new Solver(buffer, reports);
+                current.start();
+            }
+            logger.start();
+            while (true) {
                 System.out.println("Waiting for new client...");
                 Socket client = server.accept();
                 System.out.println("Client accepted...");
-                Runnable solve = new Solver(client);
-                solve.run();
-                client.close();
+                buffer.add(client);
+                //client.close();
             }
-            catch (IOException e){e.printStackTrace();}
-
-
-        }*/
-        try{
-            ServerSocket server = new ServerSocket(port);
-            try{
-                while(true){
-                    System.out.println("Waiting for new client...");
-                    Socket client = server.accept();
-                    System.out.println("Client accepted...");
-                    Runnable solve = new Solver(client);
-                    solve.run();
-                    client.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
+        finally {
+            server.close();
+        }
 
     }
 
