@@ -19,6 +19,10 @@ public class Frame {
     public Frame(Client client){
         this.client = client;
     }
+
+    /**
+     * Creates the entire GUI and adds all needed components for the Sudoku Puzzle.
+     */
     public void createAndShowGUI() {
         final JFrame frame = new JFrame("Sudoku");
 
