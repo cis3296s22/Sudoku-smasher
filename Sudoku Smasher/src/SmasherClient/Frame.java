@@ -6,6 +6,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.io.*;
@@ -31,6 +33,15 @@ public class Frame {
             final JPanel grid = new JPanel(new GridLayout(3, 0));
             for (int j = 0; j < 9; j++) {
                 final JTextField field = new JTextField(2);
+                field.setDocument(new JTextFieldLimit(1));
+                field.addKeyListener(new KeyAdapter() {
+                    public void keyTyped(KeyEvent e) {
+                        char c = e.getKeyChar();
+                        if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+                            e.consume();  // if it's not a number, ignore the event
+                        }
+                    }
+                });
                 field.setFont(font1);
                 boxes.add(field);
                 field.setHorizontalAlignment(JTextField.CENTER); //Center text horizontally in the text field.
