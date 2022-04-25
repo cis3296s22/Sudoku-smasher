@@ -1,9 +1,10 @@
 # Sudoku Smasher
-Sudoku Smasher is a desktop client/remote server sudoku puzzle solver written in Java. The client will have a simple GUI that mirrors the layout of a Sudoku puzzle and allows for easy user input. The server will handle attempting to solve the puzzle, either sending a solved sudoku puzzle back to the client or a message saying that it is unsolvable. The server will utilize multithreading to serve many clients simultaneously and log all attempted solutions internally. The client will then either display the solved puzzle or a message saying that it was unsolvable. 
+Sudoku Smasher is a desktop client/remote server sudoku puzzle solver written in Java. The client consists of a simple GUI that mirrors the layout of a Sudoku puzzle and allows for easy user input. The server will handle attempting to solve the puzzle, either sending a solved sudoku puzzle back to the client or a message saying that it is unsolvable. The server will utilize multithreading to serve many clients simultaneously and log all attempted solutions internally. The client will then either display the solved puzzle or a message saying that it was unsolvable. 
 
-![An example puzzle](https://cdn.britannica.com/42/97142-131-E3E24AA5/sudoku-puzzle-games.jpg?q=60)
+   <img width="707" alt="Screen Shot 2022-04-25 at 1 54 36 PM" src="https://user-images.githubusercontent.com/66076114/165146111-6d5f6fc6-fe11-4764-8fbe-ce92aa595e24.png">
 
-# How to run   
+# How to run
+
 - Download the latest binary from the Release section on the right on GitHub.  
 - Open two shells and navigate to where the .jar files have been downloaded.
 - Run on the command line with one command per shell window
