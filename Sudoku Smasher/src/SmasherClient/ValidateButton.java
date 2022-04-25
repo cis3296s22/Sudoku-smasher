@@ -59,6 +59,8 @@ public class ValidateButton extends JButton {
                 client.setSocket();
                 if(board[0][0]!= -1){
                     JOptionPane.showMessageDialog(frame, "Good to go!");
+                }else{
+                    JOptionPane.showMessageDialog(frame, "Not good!");
                 }
             }
         });
