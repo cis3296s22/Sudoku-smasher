@@ -19,6 +19,10 @@ public class Frame {
     public Frame(Client client){
         this.client = client;
     }
+
+    /**
+     * Creates the entire GUI and adds all needed components for the Sudoku Puzzle.
+     */
     public void createAndShowGUI() {
         final JFrame frame = new JFrame("Sudoku");
 
@@ -37,7 +41,7 @@ public class Frame {
                 field.addKeyListener(new KeyAdapter() {
                     public void keyTyped(KeyEvent e) {
                         char c = e.getKeyChar();
-                        if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+                        if ( ((c < '1') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
                             e.consume();  // if it's not a number, ignore the event
                         }
                     }
@@ -66,7 +70,7 @@ public class Frame {
         buttonSection.setPreferredSize(new Dimension(300, 100));
 
         final JButton uploadCsvButton = new UpLoadButton(boxes).getUploadCsvButton();
-        uploadCsvButton.setBackground(Color.gray);
+        uploadCsvButton.setBackground(Color.lightGray);
         uploadCsvButton.setPreferredSize(new Dimension(20,10));
         buttonSection.add(uploadCsvButton);
 
@@ -74,6 +78,11 @@ public class Frame {
         submitBut.setBackground(Color.pink);
         submitBut.setPreferredSize(new Dimension(100,10));
         buttonSection.add(submitBut);
+
+        final JButton validBut = new ValidateButton(boxes, board, frame, client ).getSubmitBut();
+        validBut.setBackground(new Color(173 ,216,230));
+        validBut.setPreferredSize(new Dimension(100,10));
+        buttonSection.add(validBut);
 
         centeredGrid.add(buttonSection);
 

@@ -1,23 +1,19 @@
 package SmasherClient;
 
-import javax.management.ObjectInstance;
 import java.io.*;
-import java.net.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.security.PublicKey;
 
 public class Client {
     private Socket socket = null;
     private DataInputStream in = null;
     private DataOutputStream out = null;
-    private String serverHost = "localhost";
-    private int serverPort = 3000;
-
+    private final int port;
 
     public Client(int port){
+        this.port = port;
         try{
             socket = new Socket("localhost", port);
             System.out.println("Client start!");
@@ -32,24 +28,22 @@ public class Client {
         }
 
     }
-
+    /**
+     * Sends the 2d array to the Sever to be solved
+     * @param board a 2d array representing the current sudoku board
+     *
+     */
     public void sendPuzzle(int[][] board){
         try {
             ObjectOutputStream obj_out= new ObjectOutputStream(socket.getOutputStream());
             obj_out.writeObject(board);
         }catch (IOException e)  {System.out.println(e);}
     }
-
-    public void sendInput(String lines){
-        // send input to server
-        try {
-            out.writeUTF(lines);
-        }catch(IOException e) {
-            System.out.println("Sending Error");
-        }
-
-    }
-
+    /**
+     * Grabs the solved puzzle from the server
+     *
+     * @return a 2d array
+     */
     public int[][] getPuzzle()
     {
         int[][] board = new int[9][9];
@@ -62,15 +56,14 @@ public class Client {
         catch (ClassNotFoundException e) {e.printStackTrace();}
         return board;
     }
-
-    public String receiveSolver(){
-        String line = "";
-        try{
-            line = new String(in.readUTF());
-        }catch(IOException e){
-            System.out.println("Client can not receive message!");
-            System.exit(0);
+    /**
+     * Resets the server/client connection everytime the puzzle gets solved or validated.
+     */
+    public void setSocket(){
+        try {
+            socket = new Socket("localhost", port);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return line;
     }
 }
