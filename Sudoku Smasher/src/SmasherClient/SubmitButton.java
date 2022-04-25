@@ -5,12 +5,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Submission button for the client
+ * submitBut is the JButton representing the button
+ * boxes is the user text fields
+ * board is the sudoku board
+ * frame is the window frame
+ * client is used for socket connections
+ */
 public class SubmitButton{
     private final JButton submitBut;
     private final ArrayList<JTextField> boxes;
     private int[][] board;
     private final JFrame frame;
     private final Client client;
+
+    /**
+     * constructor class
+     * @param boxes array of textboxes
+     * @param board 9x9 int array representing sudoku board
+     * @param frame GUI frame
+     * @param client used for socket communication
+     */
     public SubmitButton(ArrayList<JTextField> boxes, int [][] board, JFrame frame, Client client){
         submitBut = new JButton("Submit");
         this.board = board;
@@ -19,9 +35,19 @@ public class SubmitButton{
         this.boxes = boxes;
         setAction(submitBut);
     }
+
+    /**
+     * gets the button
+     * @return submission button
+     */
     public JButton getSubmitBut(){
         return submitBut;
     }
+
+    /**
+     * Convert the text boxes into a board and send it to the server. Wait for the server to respond and then display puzzle if solved
+     * @param submitBut button adding action to
+     */
     private void setAction(JButton submitBut){
         submitBut.addActionListener(new ActionListener() {
             @Override
@@ -63,6 +89,12 @@ public class SubmitButton{
             }
         });
     }
+
+    /**
+     * Update the GUI to reflect the received puzzle
+     * @param board received board from server
+     * @return false if bad board flag seen, true otherwise
+     */
     private boolean updateBoard (int[][] board)
     {
         int rowOffset = 0;

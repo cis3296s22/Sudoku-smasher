@@ -3,6 +3,16 @@ package SmasherServer;
 import  java.net.*;
 import  java.io.*;
 
+/**
+ * Solver thread that continually takes sockets, reads a puzzles, solves it, logs it and sends it back
+ * BAD_BOARD is a flag indicating the puzzle was unsolvable
+ * board is a 9x9 holding a sudoku board
+ * socket is the current socket
+ * input_stream is used to read in sudoku boards
+ * output_stream is used to write to clients
+ * connection_queue is a thread-safe FIFO queue for socket distribution
+ * reports is a thread-safe FIFO queue for solve attempt distribution
+ */
 public class Solver extends Thread{
     private final int[][] BAD_BOARD; //need to flag bad puzzles somehow maybe send board of all -1?
     private int[][] board;
@@ -18,6 +28,8 @@ public class Solver extends Thread{
 
     /**
      * constructor giving access to the board since run() has no arguments
+     * @param buffer thread-safe FIFO queue of sockets
+     * @param reports thread-safe FIFO queue of solved boards
      */
     public Solver(SafeQueue buffer, SafeQueue reports)
     {
@@ -35,7 +47,11 @@ public class Solver extends Thread{
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1 }
         };
     }
-    //some bad puzzles give this a very long runtime not really sure why
+
+    /**
+     * Main process of thread, runs when called
+     * Continually tries to take a socket from the connection_queue, solve it, log it and send it back over the socket
+     */
     @Override
     public void run() {
         while (true) {
@@ -89,6 +105,12 @@ public class Solver extends Thread{
             }
         }
     }
+
+    /**
+     * Check to see if the board is allowed or not
+     * @param board a 9x9 sudoku board as 2d int array
+     * @return true if valid, false if not valid
+     */
     private static boolean isValidBoard(int[][] board){
         for (int i = 0; i < board_size; i++) {
             for (int j = 0; j < board_size; j++) {
@@ -102,6 +124,14 @@ public class Solver extends Thread{
         return true;
     }
 
+    /**
+     * Private helper to see if a specific guess is valid or not
+     * @param board a 9x9 sudoku board as a 2d int array
+     * @param row row of guess
+     * @param col column of guess
+     * @param entry number guess
+     * @return true if valid, false if not
+     */
     private static boolean isValidBoardEntry(int[][] board,
                                         int row, int col,
                                         int entry){

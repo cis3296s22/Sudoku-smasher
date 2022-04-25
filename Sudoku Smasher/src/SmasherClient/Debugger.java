@@ -1,6 +1,12 @@
 package SmasherClient;
 
+/**
+ * used for help with debugging
+ */
 public class Debugger {
+    /**
+     * example good test board
+     */
     private static int[][] testBoard = new int[][] {
             { 3, 0, 6, 5, 0, 8, 4, 0, 0 },
             { 5, 2, 0, 0, 0, 0, 0, 0, 0 },
@@ -13,6 +19,9 @@ public class Debugger {
             { 0, 0, 5, 2, 0, 6, 3, 0, 0 }
     };
 
+    /**
+     * example invalid test board
+     */
     private static int[][] badTestBoard = new int[][] {
             { 3, 3, 6, 5, 0, 8, 4, 0, 0 },
             { 5, 2, 0, 0, 0, 0, 0, 0, 0 },
@@ -25,10 +34,21 @@ public class Debugger {
             { 0, 0, 5, 2, 0, 6, 3, 0, 2 }
     };
 
+    /**
+     *
+     * @return returns example of good test
+     */
     public static int[][]getGoodTest(){ return testBoard;}
 
+    /**
+     * @return returns example of bad test
+     */
     public static int[][]getBadTest(){return badTestBoard;}
 
+    /**
+     * print the matrix to the terminal
+     * @param board 9x9 int array representing sudoku board to be printed
+     */
     public static void showMatrix(int[][] board)
     {
         int size = board.length;

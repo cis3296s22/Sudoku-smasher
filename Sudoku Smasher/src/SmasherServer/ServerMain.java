@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.ServerSocket;
 
+/**
+ * Main server thread of Sudoku Smasher, continually accepts socket connections and
+ * adds them to a thread-safe queue for distribution to solver threads
+ */
 public class ServerMain
 {
     public final static int port = 3000;

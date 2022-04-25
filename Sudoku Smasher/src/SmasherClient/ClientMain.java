@@ -5,7 +5,10 @@ import SmasherServer.Debugger;
 
 import javax.swing.*;
 
-
+/**
+ * Main client process, creates a socket connection then a GUI
+ * allows for a single solve attempt currently
+ */
 public class ClientMain {
     public static void main(String[] args)
     {

@@ -16,7 +16,10 @@ public class Client {
     private String serverHost = "localhost";
     private int serverPort = 3000;
 
-
+    /**
+     * Makes a new client and establishes connection
+     * @param port port to be used for communication
+     */
     public Client(int port){
         try{
             socket = new Socket("localhost", port);
@@ -33,6 +36,10 @@ public class Client {
 
     }
 
+    /**
+     * sends a puzzle to the server for solving
+     * @param board 9x9 int array representing sudoku boards
+     */
     public void sendPuzzle(int[][] board){
         try {
             ObjectOutputStream obj_out= new ObjectOutputStream(socket.getOutputStream());
@@ -40,6 +47,10 @@ public class Client {
         }catch (IOException e)  {System.out.println(e);}
     }
 
+    /**
+     * sends a message to server, used for debugging purposes
+     * @param lines message to be sent to server
+     */
     public void sendInput(String lines){
         // send input to server
         try {
@@ -50,6 +61,10 @@ public class Client {
 
     }
 
+    /**
+     * receive a sudoku boards from the server
+     * @return sudoku board received from server
+     */
     public int[][] getPuzzle()
     {
         int[][] board = new int[9][9];
@@ -62,6 +77,11 @@ public class Client {
         catch (ClassNotFoundException e) {e.printStackTrace();}
         return board;
     }
+
+    /**
+     * receive a message, used for debugging purposes
+     * @return message sent from server
+     */
 
     public String receiveSolver(){
         String line = "";

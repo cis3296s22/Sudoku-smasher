@@ -1,7 +1,5 @@
 package SmasherServer;
 
-import java.io.ObjectStreamException;
-import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.locks.Condition;
@@ -9,7 +7,13 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 
-//thread safe queue for socket distribution
+/**Thread-safe FIFO queue for distritbution of objects from thread to thread
+ *
+ * @param <T> any Type
+ * connection_queue is a queue holding objects
+ * lock is a mutex lock used to maintain concurrency
+ * buffer_not_empty is a condition variable signalling the queue holds items
+ */
 public class SafeQueue<T>
 {
     private Queue<T> connection_queue;
@@ -25,8 +29,8 @@ public class SafeQueue<T>
 
     }
 
-    /**add a sock
-     * @param thing Socket accepted from the main server class
+    /**add an item to the queue
+     * @param thing object to be added to the queue
      */
     public void add (T thing) throws InterruptedException
     {
@@ -43,6 +47,11 @@ public class SafeQueue<T>
 
     }
 
+    /**Take an item from the queue.
+     *
+     * @return object of type T
+     * @throws InterruptedException if thread interrupted
+     */
     public  T take() throws InterruptedException {
         lock.lock();
         try{

@@ -6,12 +6,21 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * button used for csv upload of puzzle
+ * uploadCSV button is the Jbutton
+ * MEDIA_ROOT, MEDIA_INPUT_ROOT, MEDIA_OUTPUT_ROOT used for file direction
+ */
 public class UpLoadButton{
     private JButton uploadCsvButton;
     private final String MEDIA_ROOT = "data/";
     private final String MEDIA_INPUT_ROOT = MEDIA_ROOT + "input/";
     private final String MEDIA_OUTPUT_ROOT = MEDIA_ROOT + "output/";
 
+    /**
+     * uploads a sudoku puzzle in the form of a CSV file
+     * @param boxes array of text fields
+     */
     public UpLoadButton(ArrayList<JTextField> boxes){
         uploadCsvButton = new JButton("Upload CSV");
         uploadCsvButton.addActionListener(new ActionListener() {
@@ -63,7 +72,10 @@ public class UpLoadButton{
             }
         });
     }
-
+    /**
+     * gets button
+     * @return button
+     */
     public JButton getUploadCsvButton() {
         return uploadCsvButton;
     }

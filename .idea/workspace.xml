@@ -7,9 +7,41 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e5d0886-de82-4aca-a640-344d66ae2a61" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/JTextFieldLimit.java" afterDir="false" />
+    <list default="true" id="e28ba490-b44c-4ad4-9170-70df129531e0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherClient/Client.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherClient/ClientMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherClient/Debugger.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherClient/Frame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherClient/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherClient/SubmitButton$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherClient/SubmitButton.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherClient/UpLoadButton$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherClient/UpLoadButton.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherServer/Debugger.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherServer/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherServer/MainFrame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherServer/SafeQueue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherServer/ServerMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/out/production/Sudoku Smasher/SmasherServer/Solver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/ClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/ClientMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/Debugger.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/Debugger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/Frame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/SubmitButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/SubmitButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherServer/Debugger.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherServer/Debugger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherServer/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherServer/Logger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherServer/SafeQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherServer/SafeQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherServer/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherServer/ServerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherServer/Solver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherServer/Solver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Sudoku Smasher/SmasherClient/Client.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Sudoku Smasher/SmasherClient/ClientMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Sudoku Smasher/SmasherClient/Debugger.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Sudoku Smasher/SmasherServer/Debugger.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Sudoku Smasher/SmasherServer/MainFrame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Sudoku Smasher/SmasherServer/SafeQueue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Sudoku Smasher/SmasherServer/ServerMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Sudoku Smasher/SmasherServer/Solver.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,5 +148,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Sudoku_smasher$ClientMain.ic" NAME="ClientMain Coverage Results" MODIFIED="1649618956461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>SmasherClient.*</FILTER>
+    </SUITE>
   </component>
 </project>

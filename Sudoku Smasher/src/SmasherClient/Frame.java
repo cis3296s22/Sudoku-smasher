@@ -12,13 +12,28 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.io.*;
 
+/**
+ * Creates a Java Swing GUI for solving sudoku puzzles
+ * board holds a 9x9 int array representing a sudoku boards
+ * client is used for communication over Sockets
+ * boxes holds the text fields used for user entry
+ */
 public class Frame {
     private int[][] board = new int[9][9];
     private final Client client;
     private final ArrayList<JTextField> boxes = new ArrayList<>();
+
+    /**
+     * Constructor class
+     * @param client client used for socket communication
+     */
     public Frame(Client client){
         this.client = client;
     }
+
+    /**
+     * Creates the GUI used for user input
+     */
     public void createAndShowGUI() {
         final JFrame frame = new JFrame("Sudoku");
 
@@ -87,7 +102,10 @@ public class Frame {
     }
 
 
-
+    /**
+     * gets a board, used for debugging
+     * @return sudoku board
+     */
     public int[][] getSudokuMatrix() {
         return board;
     }
