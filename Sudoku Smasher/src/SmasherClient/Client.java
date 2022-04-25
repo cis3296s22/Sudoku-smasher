@@ -13,11 +13,10 @@ public class Client {
     private Socket socket = null;
     private DataInputStream in = null;
     private DataOutputStream out = null;
-    private String serverHost = "localhost";
-    private int serverPort = 3000;
-
+    private final int port;
 
     public Client(int port){
+        this.port = port;
         try{
             socket = new Socket("localhost", port);
             System.out.println("Client start!");
@@ -72,5 +71,12 @@ public class Client {
             System.exit(0);
         }
         return line;
+    }
+    public void setSocket(){
+        try {
+            socket = new Socket("localhost", port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
