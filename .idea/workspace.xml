@@ -7,10 +7,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e5d0886-de82-4aca-a640-344d66ae2a61" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/JTextFieldLimit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sudoku Smasher/src/SmasherClient/Frame.java" afterDir="false" />
-    </list>
+    <list default="true" id="6e5d0886-de82-4aca-a640-344d66ae2a61" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
